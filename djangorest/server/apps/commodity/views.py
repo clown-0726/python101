@@ -1,0 +1,67 @@
+from django.http import JsonResponse, Http404
+from rest_framework import status
+from rest_framework.views import APIView
+from utils.mixin import LoginRequiredMixin
+from commodity.serializer import CommodityEditSerializer, CommoditySerializer
+from commodity.models import Commodity
+
+
+class AuthTestView(LoginRequiredMixin, APIView):
+    '''
+    测试 LoginRequiredMixin
+    '''
+
+    def post(self, request):
+        print('I am LoginRequiredMixin')
+        print(request.user)
+        return JsonResponse(data={'message': 'success'})
+
+
+class CommodityListView(LoginRequiredMixin, APIView):
+    def get(self, request, format=None):
+        """得到所有的 Commodity"""
+        commodities = Commodity.objects.all()[:10]
+        serializer = CommoditySerializer(commodities, many=True)
+        return JsonResponse(serializer.data, safe=False)
+
+
+class CommodityDetailView(LoginRequiredMixin, APIView):
+    def get_object(self, pk):
+        try:
+            return Commodity.objects.get(pk=pk)
+        except Commodity.DoesNotExist:
+            raise Http404
+
+    def get(self, request, pk, format=None):
+        """得到一个 Commodity"""
+        commodity = self.get_object(pk)
+        serializer = CommoditySerializer(commodity)
+        return JsonResponse(data=serializer.data)
+
+    def put(self, request, pk, format=None):
+        """更新一个 Commodity"""
+        commodity = self.get_object(pk)
+        save_data = {}
+        save_data['name'] = request.data['name']
+        save_data['desc'] = request.data['desc']
+        save_data['owner_id'] = request.user.id
+
+        serializer = CommodityEditSerializer(commodity, data=save_data)
+        if serializer.is_valid():
+            serializer.save()
+            # serializer.update(serializer.data)
+            return JsonResponse(serializer.data)
+        return JsonResponse(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def post(self, request):
+        """新增一个 Commodity"""
+        save_data = {}
+        save_data['name'] = request.data['name']
+        save_data['desc'] = request.data['desc']
+        save_data['owner_id'] = request.user.id
+
+        commodity_edit_sr = CommodityEditSerializer(data=save_data)
+        if commodity_edit_sr.is_valid(raise_exception=True):
+            commodity_edit_sr.save()
+            # commodity_edit_sr.create(commodity_edit_sr.data)
+        return JsonResponse(data={'message': 'success'})
