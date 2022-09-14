@@ -16,6 +16,7 @@ class Commodity(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     name = models.CharField(max_length=50, null=True, default=None, verbose_name="NAME")
     desc = models.TextField(null=True, verbose_name="DESC")
+    price = models.IntegerField(null=True)
     owner = models.ForeignKey(UserProfile, related_name="commodity_user_id", null=True, on_delete=models.SET_NULL, verbose_name='COMMODITY USER ID')
     created_at = models.DateTimeField(db_index=True, auto_now_add=True, verbose_name='CREATE TIME')
     updated_at = models.DateTimeField(auto_now=True, verbose_name='UPDATE TIME')

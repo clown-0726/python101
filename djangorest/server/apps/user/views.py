@@ -1,3 +1,15 @@
-from django.shortcuts import render
+from rest_framework.views import APIView
+from django.http import JsonResponse
 
-# Create your views here.
+from utils.mixin import LoginRequiredMixin
+
+
+class AuthTestView(LoginRequiredMixin, APIView):
+    '''
+    测试 LoginRequiredMixin
+    '''
+
+    def post(self, request):
+        print('I am LoginRequiredMixin')
+        print(request.user)
+        return JsonResponse(data={'message': 'success'})
