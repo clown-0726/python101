@@ -1,9 +1,0 @@
-[submodule "python-playground"]
-	path = python-playground
-	url = https://github.com/For-learning/python-playground.git
-[submodule "python-djangorest"]
-	path = python-djangorest
-	url = https://github.com/For-learning/python-djangorest.git
-[submodule "python-djangopure"]
-	path = python-djangopure
-	url = https://github.com/For-learning/python-djangopure.git
