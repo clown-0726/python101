@@ -1,0 +1,20 @@
+>>> 前台 <<<
+针对异常情况，前台希望的格式：
+非 200 返回：
+    - 各种异常（应该具有统一的格式，方便显示）
+200 返回：
+    - 正常数据
+    - 异常数据（提示，继续操作为主）
+
+
+>>> 后台 <<<
+首先是异常捕获类，捕获异常根据情况返回到前台 ------ 这样前台收到的一定是规范的异常
+1. 正常异常的捕获类
+globe_exception_handler: Http404 / PermissionDenied / APIException
+
+2. 兜底的异常捕获类
+ExceptionGlobeMiddleware
+
+
+具体的异常类
+使用 BusinessException 联合 error_code_enum
