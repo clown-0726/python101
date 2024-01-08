@@ -1,0 +1,7 @@
+<div>
+    <ul class="stream" id="newsList">
+        {% for news in news_list %}
+            <p>{{ news.user.get_profile_name }}</p>
+        {% endfor %}
+    </ul>
+</div>
