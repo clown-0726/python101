@@ -13,24 +13,14 @@ class SingletonType(type):
 
 
 class Foo(metaclass=SingletonType):
+    pass
+    # def __init__(self, name):
+    #     self.name = name
+
+
+class Other(Foo):
     def __init__(self, name):
         self.name = name
-
-
-# class SingletonType(type):
-#     _instance_lock = threading.Lock()
-#
-#     def __call__(cls, *args, **kwargs):
-#         if not hasattr(cls, "_instance"):
-#             with SingletonType._instance_lock:
-#                 if not hasattr(cls, "_instance"):
-#                     cls._instance = super(SingletonType, cls).__call__(cls, *args, **kwargs)
-#         return cls._instance
-#
-#
-# class S3ConnectionHandler(metaclass=SingletonType):
-#     def __init__(self, name):
-#         self.name = name
 
 
 # class S3ConnectionHandler:
@@ -48,9 +38,15 @@ class Foo(metaclass=SingletonType):
 
 
 if __name__ == '__main__':
-    s3connectionhandler1 = Foo(name='xiaoming')
-    s3connectionhandler2 = Foo(name='xiaohua')
-    print(s3connectionhandler1.name)
-    print(s3connectionhandler2.name)
+    # foo1 = Foo(name='Xiaoming')
+    # foo2 = Foo(name='Xiaohua')
+    #
+    # print(foo1.name)
+    # print(foo2.name)
+    # print(foo1 is foo2)
 
-    print(s3connectionhandler1 is s3connectionhandler2)
+    other1 = Other(name='Xiaoming')
+    other2 = Other(name='Xiaohua')
+    print(other1.name)
+    print(other2.name)
+    print(other1 is other2)
