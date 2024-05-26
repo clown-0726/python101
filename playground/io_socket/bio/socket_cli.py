@@ -4,7 +4,7 @@ sock_type = "file"  # file/net
 
 if sock_type == "net":
     cli_sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    cli_sock.connect(('127.0.0.1', 8888))
+    cli_sock.connect(('127.0.0.1', 9000))
 elif sock_type == "file":
     print("xxx")
     socket_file = '/tmp/unix_socket.sock'

@@ -5,9 +5,9 @@ import threading
 sock_type = "file"  # file/net
 
 if sock_type == "net":
-    # 通过系统调用的到 socket：socket -> bind -> listen
+    # 通过系统调 socket：socket -> bind -> listen
     server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    server.bind(('0.0.0.0', 8888))
+    server.bind(('127.0.0.1', 9000))
     server.listen()
     print("Server started on...")
 elif sock_type == "file":
@@ -45,7 +45,7 @@ def cli_sock_handler(cli_sock, addr):
 
 
 while True:
-    srv_sock, addr = server.accept()
+    cli_sock, addr = server.accept()
     # 用线程去处理新接收的链接
-    client_thread = threading.Thread(target=cli_sock_handler, args=(srv_sock, addr))
+    client_thread = threading.Thread(target=cli_sock_handler, args=(cli_sock, addr))
     client_thread.start()
