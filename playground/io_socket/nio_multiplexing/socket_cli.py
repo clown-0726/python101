@@ -1,7 +1,7 @@
 import socket
 
 cli_sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-cli_sock.connect(('127.0.0.1', 9001))
+cli_sock.connect(('127.0.0.1', 9000))
 
 while True:
     re_data = input()

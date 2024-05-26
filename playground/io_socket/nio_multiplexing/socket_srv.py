@@ -2,7 +2,8 @@ import select
 import socket
 
 srv_sock = socket.socket()
-srv_sock.bind(("127.0.0.1", 9001))
+srv_sock.setblocking(False)
+srv_sock.bind(("127.0.0.1", 9000))
 srv_sock.listen()
 print("Server started on...")
 
@@ -25,6 +26,7 @@ while True:
     for fd, event in events:
         if fd == srv_sock.fileno():
             cli_sock, addr = srv_sock.accept()
+            cli_sock.setblocking(False)
             print("New connection from {}".format(addr))
             epoll.register(cli_sock.fileno(), select.POLLIN)
             connections[cli_sock.fileno()] = cli_sock
