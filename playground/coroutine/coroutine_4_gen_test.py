@@ -6,16 +6,27 @@ from coroutine_4_gen import coroutine, YieldLoop
 
 
 @coroutine
-def arithmetic_sequence():
+def arithmetic_sequence_100():
     """计算等差数列
     """
     sum_total = 0
-    for i in range(1, 10001):
+    for i in range(0, 100):
         sum_total += yield i
     print("sum = ", sum_total)
 
 
-YieldLoop.instance().add_coroutine(arithmetic_sequence())
+@coroutine
+def arithmetic_sequence_1000():
+    """计算等差数列
+    """
+    sum_total = 0
+    for i in range(0, 1000):
+        sum_total += yield i
+    print("sum = ", sum_total)
+
+
+YieldLoop.instance().add_coroutine(arithmetic_sequence_100())
+YieldLoop.instance().add_coroutine(arithmetic_sequence_1000())
 YieldLoop.instance().run_until_complete()
 
 

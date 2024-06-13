@@ -4,6 +4,13 @@ from collections import deque
 
 
 class Future:
+    """
+    原理：相当于 Promise
+    1. 协程对象的引用
+    2. 完成标记
+    3. 执行结果
+    """
+
     def __init__(self, loop):
         self.done = False
         self.co = None
@@ -79,6 +86,7 @@ class EventLoop:
 
     @classmethod
     def instance(cls):
+        """保证 loop 是单例模式"""
         if not EventLoop.current:
             EventLoop.current = EventLoop()
         return EventLoop.current
@@ -114,7 +122,7 @@ class EventLoop:
             while self.runnables:
                 self.run_coroutine(co=self.runnables.popleft())
 
-            events = self.epoll.poll(1)  # 等待一秒，等待任意的事件发生
+            events = self.epoll.poll(timeout=1)  # 一秒超时
             for fileno, event in events:
                 # 得到回调函数并执行
                 handler = self.handlers.get(fileno)
