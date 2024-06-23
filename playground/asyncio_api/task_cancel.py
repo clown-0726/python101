@@ -15,7 +15,7 @@ tasks = [task1, task2, task3]
 loop = asyncio.get_event_loop()
 try:
     loop.run_until_complete(asyncio.wait(tasks))
-except KeyboardInterrupt as e:
+except KeyboardInterrupt as e:  # 当用户强制退出的时候，进行任务的取消
     all_tasks = asyncio.Task.all_tasks(loop=loop)
     for task in all_tasks:
         print(task.cancel())

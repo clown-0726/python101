@@ -14,10 +14,11 @@ def stop_loop(loop):
 if __name__ == "__main__":
     loop = asyncio.get_event_loop()
     now = loop.time()  # 内部的时钟时间
+    print(now)
 
     loop.call_soon(callback, 2)
     # loop.call_soon_threadsafe()
     loop.call_later(3, callback, 1)
-    loop.call_at(now + 5, callback)
+    loop.call_at(now + 5, callback, 1)
     # loop.call_soon(stop_loop, loop)
     loop.run_forever()
