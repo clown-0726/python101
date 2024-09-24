@@ -6,7 +6,8 @@ default_args = {
     'owner': 'airflow',  # 所属用户
     'start_date': datetime(2024, 9, 8),  # 第一次执行的时间
     'retries': 1,  # 失败重试次数
-    'retry_delay': timedelta(minutes=3)  # 失败重试间隔
+    'retry_delay': timedelta(minutes=3),  # 失败重试间隔
+    'catchup': True,  # 执行 DAG 时，将开始时间到目前所有该执行的任务都执行，默认为 True
 }
 
 dag = DAG(
