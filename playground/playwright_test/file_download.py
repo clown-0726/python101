@@ -5,6 +5,9 @@ from playwright.async_api import async_playwright, Error
 """
 https://www.idx.co.id/StaticData/NewsAndAnnouncement/ANNOUNCEMENTSTOCK/From_EREP/202403/1483219765_72d8de0178.pdf
 这个连接在公司环境下是能下载的，但是挂上 VPN 就没法下载了，有 Cloudflare 的保护！
+
+p.chromium 无法在有头模式下下载 PDF，因为 chromium 默认会展示 PDF
+但是通过 p.firefox 可以做到有头模式下的下载操作
 """
 
 
