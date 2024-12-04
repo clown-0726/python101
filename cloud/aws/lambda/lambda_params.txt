@@ -1,0 +1,35 @@
+>>> For SQS Data <<<
+
+def deal_sqs_data(event, context):
+    for record in event['Records']:
+        payload = record["body"]
+        message_attributes = record['messageAttributes']
+
+        payload_json = json.loads(payload)
+
+        print(message_attributes)
+        print(payload_json)
+
+
+>>> For HTTP Data <<<
+def deal_http_data(event, context):
+    print(event["rawQueryString"])
+
+    query_dict = dict(parse_qsl(event["rawQueryString"]))
+
+    if "pk" not in query_dict:
+        raise ValueError("Missing key [param_key]...")
+
+    # 将字典转换为JSON字符串
+    json_string = json.dumps(query_dict)
+    print(json_string)
+
+
+>>> For RabbitMQ Data <<<
+def deal_rabbitmq_data(event, context):
+    messages = event['rmqMessagesByQueue']['queue.order::/']
+
+    for message in messages:
+        data = message['data']
+        decoded_string = decode_message(data)
+        print(decoded_string)
