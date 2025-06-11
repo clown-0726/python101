@@ -16,6 +16,8 @@ zk.start()
 # 从根节点开始打印所有的 znode
 print_all_znodes(zk, "")
 
+zk.create("/myjaas", b"data", sequence=True)
+
 zk.stop()
 zk.close()
 
